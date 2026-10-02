@@ -16,7 +16,7 @@ export const profile = {
   leetcode: "AlveeHossain45",
   leetcodeUrl: "https://leetcode.com/u/AlveeHossain45/",
   image: "/Alveejob.png",
-  resumeUrl: "/resume.pdf",
+  resumeUrl: "/Alvee%20Hossain%20Resume.pdf",
 };
 
 export const about = [

@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Menu, Moon, Search, Sun, X } from "lucide-react";
 import { AHNavMark } from "./AHMark";
 import GitHubIcon from "./GitHubIcon";
+import LeetCodeIcon from "./LeetCodeIcon";
 import { profile, navItems } from "../data/portfolioData";
 
 export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [active, setActive] = useState("#top");
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -14,6 +16,14 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
       setScrolled(window.scrollY > 8);
       const max = document.documentElement.scrollHeight - window.innerHeight;
       setProgress(max > 0 ? Math.min(1, window.scrollY / max) : 0);
+
+      let current = "#top";
+      for (const item of navItems) {
+        if (!item.href.startsWith("#") || item.href === "#top") continue;
+        const el = document.getElementById(item.href.slice(1));
+        if (el && el.getBoundingClientRect().top <= 120) current = item.href;
+      }
+      setActive((prev) => (prev === current ? prev : current));
     }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -44,7 +54,7 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
             <div className="flex h-12 items-center justify-between gap-2 px-3 sm:px-4">
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute bottom-0 left-0 h-0.5 bg-foreground/60 transition-[width] duration-150 ease-out"
+                className="pointer-events-none absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-foreground/40 via-foreground/80 to-foreground/40 transition-[width] duration-150 ease-out"
                 style={{ width: `${progress * 100}%` }}
               />
               <a
@@ -60,7 +70,12 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
                 <a
                   key={item.href}
                   href={item.href}
-                  className="rounded-md px-2.5 py-1 text-[13px] font-medium text-foreground/80 transition-colors hover:bg-accent hover:text-foreground"
+                  aria-current={active === item.href ? "true" : undefined}
+                  className={`rounded-full px-2.5 py-1 text-[13px] font-medium transition-colors duration-200 ${
+                    active === item.href
+                      ? "bg-accent text-foreground"
+                      : "text-foreground/70 hover:bg-accent/70 hover:text-foreground"
+                  }`}
                 >
                   {item.label}
                 </a>
@@ -81,11 +96,21 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
               </button>
 
               <a
+                href={profile.leetcodeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LeetCode"
+                className="inline-flex size-8 items-center justify-center rounded-full text-[#FFA116] transition-all duration-200 hover:bg-[#FFA116]/10 hover:scale-110"
+              >
+                <LeetCodeIcon className="size-4" />
+              </a>
+
+              <a
                 href={profile.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                className="inline-flex size-8 items-center justify-center rounded-full text-foreground transition-colors hover:bg-accent"
+                className="inline-flex size-8 items-center justify-center rounded-full text-foreground transition-all duration-200 hover:bg-accent hover:scale-110"
               >
                 <GitHubIcon className="size-4" />
               </a>
@@ -94,7 +119,7 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
                 type="button"
                 onClick={onToggleTheme}
                 aria-label="Toggle theme"
-                className="inline-flex size-8 items-center justify-center rounded-full text-foreground transition-colors hover:bg-accent"
+                className="inline-flex size-8 items-center justify-center rounded-full text-foreground transition-all duration-200 hover:bg-accent hover:scale-110"
               >
                 {theme === "dark" ? (
                   <Sun className="size-4" />
@@ -144,6 +169,15 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
                   className="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent"
                 >
                   Experience
+                </a>
+                <a
+                  href={profile.leetcodeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent"
+                >
+                  <LeetCodeIcon className="size-4 text-[#FFA116]" />
+                  LeetCode Profile
                 </a>
               </nav>
             </div>

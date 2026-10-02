@@ -20,7 +20,7 @@ function VerifiedIcon() {
 
 export default function ProfileHeader() {
   return (
-    <div id="top">
+    <div id="top" data-reveal="">
       <div
         className="dot-grid screen-line-before screen-line-after flex aspect-[2/1] select-none items-center justify-center border-x border-edge text-foreground sm:aspect-[3/1]"
         style={{
@@ -28,7 +28,8 @@ export default function ProfileHeader() {
             "color-mix(in oklab, var(--foreground) 5%, transparent)",
         }}
       >
-        <AHMark className="h-[48%] w-auto max-h-28 sm:max-h-32" />
+        <div aria-hidden="true" className="hero-glow pointer-events-none absolute inset-0" />
+        <AHMark className="relative h-[48%] w-auto max-h-28 sm:max-h-32" />
       </div>
 
       <div className="screen-line-after flex border-x border-edge">
@@ -39,7 +40,7 @@ export default function ProfileHeader() {
               alt={`${profile.name}'s avatar`}
               width={160}
               height={160}
-              className="size-32 rounded-full object-cover ring-1 ring-border ring-offset-2 ring-offset-background sm:size-40"
+              className="size-32 rounded-full object-cover ring-1 ring-border ring-offset-2 ring-offset-background transition-transform duration-300 hover:scale-[1.03] sm:size-40"
             />
           </div>
         </div>

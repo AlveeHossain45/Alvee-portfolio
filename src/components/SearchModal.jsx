@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Search, ArrowRight } from "lucide-react";
+import { Search, ArrowRight, ArrowUpRight } from "lucide-react";
 import { searchItems } from "../data/portfolioData";
 
 export default function SearchModal({ open, onClose }) {
@@ -53,6 +53,10 @@ export default function SearchModal({ open, onClose }) {
 
   function go(href) {
     onClose();
+    if (href.startsWith("http")) {
+      window.open(href, "_blank", "noopener,noreferrer");
+      return;
+    }
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
@@ -72,14 +76,14 @@ export default function SearchModal({ open, onClose }) {
       <button
         type="button"
         aria-label="Close search"
-        className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"
+        className="enter-fade absolute inset-0 bg-black/40 backdrop-blur-[2px]"
         onClick={onClose}
       />
       <div
         role="dialog"
         aria-modal="true"
         aria-label="Search"
-        className="relative z-10 w-full max-w-lg overflow-hidden rounded-xl border border-edge bg-popover text-popover-foreground shadow-[0_8px_40px_rgba(0,0,0,0.18)]"
+        className="enter-pop relative z-10 w-full max-w-lg overflow-hidden rounded-xl border border-edge bg-popover text-popover-foreground shadow-[0_8px_40px_rgba(0,0,0,0.18)]"
       >
         <div className="flex items-center gap-3 border-b border-edge px-3">
           <Search className="size-4 text-muted-foreground" />
@@ -120,7 +124,11 @@ export default function SearchModal({ open, onClose }) {
                     }`}
                   >
                     <span>{item.title}</span>
-                    <ArrowRight className="size-3.5 text-muted-foreground" />
+                    {item.href.startsWith("http") ? (
+                      <ArrowUpRight className="size-3.5 text-muted-foreground" />
+                    ) : (
+                      <ArrowRight className="size-3.5 text-muted-foreground" />
+                    )}
                   </button>
                 );
               })}

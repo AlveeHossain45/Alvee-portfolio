@@ -13,6 +13,8 @@ export const profile = {
   websiteUrl: "https://alveehossain.netlify.app/",
   github: "AlveeHossain45",
   githubUrl: "https://github.com/AlveeHossain45",
+  leetcode: "AlveeHossain45",
+  leetcodeUrl: "https://leetcode.com/u/AlveeHossain45/",
   image: "/Alveejob.png",
   resumeUrl: "/resume.pdf",
 };
@@ -30,6 +32,14 @@ export const socialLinks = [
     subtitle: "AlveeHossain45",
     href: "https://github.com/AlveeHossain45",
     kind: "github",
+  },
+  {
+    id: "leetcode",
+    title: "LeetCode",
+    subtitle: "@AlveeHossain45",
+    href: "https://leetcode.com/u/AlveeHossain45/",
+    kind: "leetcode",
+    accent: "#FFA116",
   },
   {
     id: "email",
@@ -138,6 +148,9 @@ export const searchItems = [
   { title: "Blog", href: "#blog", group: "Sections" },
   { title: "Resume", href: "#resume", group: "Sections" },
   { title: "GitHub Activity", href: "#github", group: "Sections" },
+  { title: "GitHub Profile", href: profile.githubUrl, group: "Links" },
+  { title: "LeetCode Profile", href: profile.leetcodeUrl, group: "Links" },
+  { title: "Portfolio Website", href: profile.websiteUrl, group: "Links" },
   ...projects.map((p) => ({
     title: p.name,
     href: "#projects",

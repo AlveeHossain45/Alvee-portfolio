@@ -8,15 +8,15 @@ function ProjectRow({ project }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="screen-line-after">
-      <div className="flex items-center gap-2 px-3 py-3 transition-colors hover:bg-accent/40 sm:gap-3 sm:px-4">
+    <div className="group/row screen-line-after">
+      <div className="flex items-center gap-2 px-3 py-3 transition-colors duration-200 hover:bg-accent/40 sm:gap-3 sm:px-4">
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
           className="flex min-w-0 flex-1 items-center gap-3 text-left"
         >
           <span
-            className="flex size-8 shrink-0 items-center justify-center rounded-lg font-mono text-[10px] font-semibold text-white"
+            className="flex size-8 shrink-0 items-center justify-center rounded-lg font-mono text-[10px] font-semibold text-white ring-1 ring-black/10 transition-transform duration-200 group-hover/row:-translate-y-0.5"
             style={{ backgroundColor: project.iconBg }}
           >
             {project.icon}
@@ -75,7 +75,7 @@ function ProjectRow({ project }) {
                 {project.technologies.map((tech) => (
                   <li
                     key={tech}
-                    className="rounded-full border border-edge bg-muted/50 px-2 py-0.5 font-mono text-[11px]"
+                    className="rounded-full border border-edge bg-muted/50 px-2 py-0.5 font-mono text-[11px] transition-colors hover:border-foreground/25 hover:bg-muted"
                   >
                     {tech}
                   </li>

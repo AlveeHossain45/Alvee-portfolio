@@ -24,7 +24,7 @@ export default function Resume() {
           <a
             href={profile.resumeUrl}
             download
-            className="inline-flex h-9 shrink-0 items-center justify-center rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+            className="inline-flex h-9 shrink-0 items-center justify-center rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground transition-all duration-200 hover:opacity-90 hover:scale-[1.03] active:scale-95"
           >
             Download Resume
           </a>

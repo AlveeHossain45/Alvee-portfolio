@@ -20,7 +20,7 @@ export default function BackToTop() {
       type="button"
       aria-label="Scroll to top"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed right-4 bottom-4 z-40 inline-flex size-9 items-center justify-center rounded-full border border-edge bg-background text-foreground shadow-sm transition-colors hover:bg-accent"
+      className="enter-pop fixed right-4 bottom-4 z-40 inline-flex size-9 items-center justify-center rounded-full border border-edge bg-background/80 text-foreground shadow-sm backdrop-blur-md transition-colors hover:bg-accent"
     >
       <ArrowUp className="size-4" />
     </button>

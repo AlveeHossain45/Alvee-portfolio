@@ -3,6 +3,7 @@ export function Panel({ id, className = "", children, ...props }) {
     <section
       id={id}
       data-slot="panel"
+      data-reveal=""
       className={`screen-line-before screen-line-after border-x border-edge ${className}`}
       {...props}
     >

@@ -131,16 +131,19 @@ export default function Stack() {
             "color-mix(in oklab, var(--foreground) 5%, transparent)",
         }}
       >
-        <ul className="flex flex-wrap gap-4 select-none">
+        <ul className="grid grid-cols-4 gap-x-3 gap-y-5 select-none sm:grid-cols-6 md:grid-cols-7">
           {stack.map((item) => (
-            <li key={item.name} className="flex">
+            <li key={item.name} className="flex flex-col items-center gap-1.5">
               <span
                 title={item.name}
                 aria-label={item.name}
-                className="transition-transform hover:scale-110"
+                className="transition-transform duration-200 hover:scale-110"
               >
                 <TechIcon item={item} />
                 <span className="sr-only">{item.name}</span>
+              </span>
+              <span className="max-w-full truncate font-mono text-[10px] text-muted-foreground">
+                {item.name}
               </span>
             </li>
           ))}

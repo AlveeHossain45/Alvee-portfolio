@@ -15,8 +15,8 @@ export const profile = {
   githubUrl: "https://github.com/AlveeHossain45",
   leetcode: "AlveeHossain45",
   leetcodeUrl: "https://leetcode.com/u/AlveeHossain45/",
-  image: "/Alveejob.png",
-  resumeUrl: "/Alvee%20Hossain%20Resume.pdf",
+  image: "Alveejob.png",
+  resumeUrl: "Alvee%20Hossain%20Resume.pdf",
 };
 
 export const about = [

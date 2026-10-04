@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUp } from "lucide-react";
 
 const RADIUS = 15;
@@ -6,22 +6,46 @@ const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
 export default function BackToTop() {
   const [visible, setVisible] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const ringRef = useRef(null);
+
+  function updateRing() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const p = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+    if (ringRef.current) {
+      ringRef.current.setAttribute(
+        "stroke-dasharray",
+        `${(p * CIRCUMFERENCE).toFixed(1)} ${CIRCUMFERENCE}`
+      );
+    }
+  }
 
   useEffect(() => {
-    function onScroll() {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(max > 0 ? Math.min(1, window.scrollY / max) : 0);
+    let frame = 0;
+
+    function measure() {
+      frame = 0;
+      updateRing();
       setVisible(window.scrollY >= 400);
     }
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+
+    function schedule() {
+      if (frame) return;
+      frame = requestAnimationFrame(measure);
+    }
+
+    measure();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
     };
   }, []);
+
+  useEffect(() => {
+    if (visible) updateRing();
+  }, [visible]);
 
   if (!visible) return null;
 
@@ -30,7 +54,7 @@ export default function BackToTop() {
       type="button"
       aria-label="Scroll to top"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="enter-pop group fixed right-4 bottom-4 z-40 inline-flex size-11 items-center justify-center rounded-full border border-edge bg-background/85 text-foreground shadow-[0_12px_30px_-16px_rgba(0,0,0,0.7)] backdrop-blur-md transition-all duration-300 hover:border-foreground/50 hover:text-foreground active:scale-95"
+      className="enter-pop group fixed right-4 bottom-4 z-40 inline-flex size-11 items-center justify-center rounded-full border border-edge bg-background/85 text-foreground shadow-[0_12px_30px_-16px_rgba(0,0,0,0.7)] backdrop-blur-md transition-colors duration-300 hover:border-foreground/50 hover:text-foreground active:scale-95"
     >
       <svg
         className="pointer-events-none absolute inset-0 -rotate-90"
@@ -38,6 +62,7 @@ export default function BackToTop() {
         aria-hidden="true"
       >
         <circle
+          ref={ringRef}
           cx="18"
           cy="18"
           r={RADIUS}
@@ -46,11 +71,8 @@ export default function BackToTop() {
           strokeWidth="2"
           strokeLinecap="round"
           className="text-foreground"
-          strokeDasharray={`${progress * CIRCUMFERENCE} ${CIRCUMFERENCE}`}
-          style={{
-            transition: "stroke-dasharray 150ms linear",
-            opacity: 0.85,
-          }}
+          strokeDasharray={`0 ${CIRCUMFERENCE}`}
+          style={{ opacity: 0.85 }}
         />
       </svg>
       <ArrowUp className="size-4 transition-transform duration-300 ease-out group-hover:-translate-y-0.5" />

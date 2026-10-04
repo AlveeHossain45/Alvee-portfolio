@@ -133,6 +133,7 @@
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    overflow-x: clip;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -142,6 +143,7 @@
     font-family: var(--font-sans);
     font-feature-settings: "cv02", "cv03", "cv04", "ss01";
     overflow-x: hidden;
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -151,6 +153,7 @@
     position: fixed;
     inset: 0;
     z-index: 0;
+    transform: translateZ(0);
     pointer-events: none;
     background:
       radial-gradient(

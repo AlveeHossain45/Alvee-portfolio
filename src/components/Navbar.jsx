@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, Moon, Search, Sun, X } from "lucide-react";
 import { AHNavMark } from "./AHMark";
 import GitHubIcon from "./GitHubIcon";
@@ -20,15 +20,17 @@ function IconButton({ label, children, className = "", ...props }) {
 
 export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [active, setActive] = useState("#top");
   const [open, setOpen] = useState(false);
+  const progressRef = useRef(null);
 
   useEffect(() => {
-    function onScroll() {
-      setScrolled(window.scrollY > 8);
+    let frame = 0;
+
+    function measure() {
+      frame = 0;
+      const y = window.scrollY;
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(max > 0 ? Math.min(1, window.scrollY / max) : 0);
 
       let current = "#top";
       for (const item of navItems) {
@@ -36,14 +38,28 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
         const el = document.getElementById(item.href.slice(1));
         if (el && el.getBoundingClientRect().top <= 120) current = item.href;
       }
+
+      const p = max > 0 ? Math.min(1, y / max) : 0;
+      if (progressRef.current) {
+        progressRef.current.style.transform = `scaleX(${p})`;
+      }
+
+      setScrolled(y > 8);
       setActive((prev) => (prev === current ? prev : current));
     }
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+
+    function schedule() {
+      if (frame) return;
+      frame = requestAnimationFrame(measure);
+    }
+
+    measure();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
     };
   }, []);
 
@@ -58,10 +74,10 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
     <header className="sticky top-0 z-50">
       <div className="mx-auto w-full max-w-[840px]">
         <div
-          className={`screen-line-before screen-line-after border-x border-edge transition-all duration-300 ${
+          className={`screen-line-before screen-line-after border-x border-edge transition-[background-color,box-shadow] duration-300 ${
             scrolled
-              ? "bg-background/75 shadow-[0_10px_30px_-24px_rgba(0,0,0,0.6)] backdrop-blur-xl"
-              : "bg-background/90 backdrop-blur-sm"
+              ? "bg-background/80 shadow-[0_10px_30px_-24px_rgba(0,0,0,0.6)] backdrop-blur-md"
+              : "bg-background"
           }`}
         >
           <div className="flex h-12 items-center justify-between gap-2 px-3 sm:px-4">
@@ -151,8 +167,9 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
               className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5"
             >
               <span
-                className="block h-full origin-left grad-brand shadow-[0_0_10px_0_rgba(99,102,241,0.55)] transition-transform duration-150 ease-out"
-                style={{ transform: `scaleX(${progress})` }}
+                ref={progressRef}
+                className="block h-full origin-left grad-brand shadow-[0_0_10px_0_rgba(99,102,241,0.55)]"
+                style={{ transform: "scaleX(0)" }}
               />
             </div>
           </div>

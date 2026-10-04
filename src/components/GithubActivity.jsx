@@ -258,6 +258,45 @@ export default function GithubActivity({ theme }) {
   const loading = status === "loading";
   const failed = status === "error";
 
+  const weeksGrid = useMemo(
+    () =>
+      weeks.map((week, wi) => (
+        <div key={wi} className="flex flex-col gap-[3px]">
+          {Array.from({ length: 7 }).map((_, di) => {
+            const day = week[di];
+            const isToday = day?.date === today;
+            return (
+              <div
+                key={day?.date || `${wi}-${di}`}
+                onMouseEnter={(e) => {
+                  if (!day) return;
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  setHover({
+                    date: day.date,
+                    count: day.count,
+                    x: rect.left + rect.width / 2,
+                    y: rect.top - 8,
+                  });
+                }}
+                onMouseLeave={() => setHover(null)}
+                className={`size-[10px] rounded-[3px] transition-all duration-200 ease-out ${
+                  loading
+                    ? "animate-pulse bg-muted"
+                    : "hover:scale-125 hover:ring-1 hover:ring-foreground/40"
+                } ${isToday ? "ring-1 ring-foreground/40" : ""}`}
+                style={
+                  loading
+                    ? undefined
+                    : { backgroundColor: levelColor(day?.level || 0, dark) }
+                }
+              />
+            );
+          })}
+        </div>
+      )),
+    [weeks, loading, dark, today]
+  );
+
   return (
     <Panel id="github">
       <SectionHeading
@@ -386,40 +425,7 @@ export default function GithubActivity({ theme }) {
                 }
                 className="flex gap-[3px]"
               >
-                {weeks.map((week, wi) => (
-                  <div key={wi} className="flex flex-col gap-[3px]">
-                    {Array.from({ length: 7 }).map((_, di) => {
-                      const day = week[di];
-                      const isToday = day?.date === today;
-                      return (
-                        <div
-                          key={day?.date || `${wi}-${di}`}
-                          onMouseEnter={(e) => {
-                            if (!day) return;
-                            const rect = e.currentTarget.getBoundingClientRect();
-                            setHover({
-                              date: day.date,
-                              count: day.count,
-                              x: rect.left + rect.width / 2,
-                              y: rect.top - 8,
-                            });
-                          }}
-                          onMouseLeave={() => setHover(null)}
-                          className={`size-[10px] rounded-[3px] transition-all duration-200 ease-out ${
-                            loading
-                              ? "animate-pulse bg-muted"
-                               : "hover:scale-125 hover:ring-1 hover:ring-foreground/40"
-                          } ${isToday ? "ring-1 ring-foreground/40" : ""}`}
-                          style={
-                            loading
-                              ? undefined
-                              : { backgroundColor: levelColor(day?.level || 0, dark) }
-                          }
-                        />
-                      );
-                    })}
-                  </div>
-                ))}
+                {weeksGrid}
               </div>
             </div>
 

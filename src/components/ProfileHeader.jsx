@@ -54,16 +54,14 @@ export default function ProfileHeader() {
 
       <div className="screen-line-after flex border-x border-edge">
         <div className="shrink-0 border-r border-edge">
-          <div className="mx-[3px] my-[4px]">
-            <div className="rounded-full bg-gradient-to-br from-sky-400 via-indigo-500 to-violet-500 p-[3px] shadow-[0_10px_30px_-16px_rgba(99,102,241,0.85)]">
-              <img
-                src={profilePhoto}
-                alt={`${profile.name}'s avatar`}
-                width={160}
-                height={160}
-                className="size-32 rounded-full bg-background object-cover ring-2 ring-background transition-transform duration-500 ease-out hover:scale-[1.04] sm:size-40"
-              />
-            </div>
+          <div className="mx-[2px] my-[3px]">
+            <img
+              src={profilePhoto}
+              alt={`${profile.name}'s avatar`}
+              width={160}
+              height={160}
+              className="size-32 rounded-full object-cover ring-1 ring-border ring-offset-2 ring-offset-background transition-transform duration-300 hover:scale-[1.03] sm:size-40"
+            />
           </div>
         </div>
 

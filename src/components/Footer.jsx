@@ -86,7 +86,7 @@ export default function Footer() {
             aria-label="Back to top"
             title="Back to top"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="ml-1 inline-flex size-9 items-center justify-center rounded-xl bg-foreground text-background transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_20px_-12px_rgba(0,0,0,0.8)]"
+            className="ml-1 inline-flex size-9 items-center justify-center rounded-xl border border-edge bg-background text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-foreground/50 hover:text-foreground"
           >
             <ArrowUp className="size-4" />
           </button>

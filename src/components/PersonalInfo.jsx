@@ -1,28 +1,17 @@
 import { useEffect, useState } from "react";
-import {
-  ArrowUpRight,
-  CodeXml,
-  Globe,
-  Mail,
-  MapPin,
-  Mars,
-  Phone,
-} from "lucide-react";
+import { CodeXml, Globe, Mail, MapPin, Mars, Phone } from "lucide-react";
 import { Panel, PanelContent, SectionHeading } from "./Panel";
 import { profile } from "../data/portfolioData";
 
-function InfoCard({ icon, children, delay = 0, href, external, className = "" }) {
-  const content = (
+function InfoRow({ icon, children, delay = 0, href, external, className = "" }) {
+  const body = (
     <>
-      <span className="icon-tile size-9 shrink-0 rounded-[10px]">{icon}</span>
-      <span className="min-w-0 flex-1 text-sm">{children}</span>
-      {href && (
-        <ArrowUpRight className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground group-hover:opacity-100" />
-      )}
+      <span className="icon-tile size-7 shrink-0 rounded-lg">{icon}</span>
+      <span className="min-w-0 truncate">{children}</span>
     </>
   );
 
-  const classes = `stagger-item group flex items-center gap-3 rounded-xl border border-edge bg-card/40 p-3 hover:border-foreground/30 hover:bg-card ${className}`;
+  const classes = `stagger-item group flex items-center gap-2.5 py-1 font-mono text-sm text-muted-foreground transition-colors duration-300 hover:text-foreground ${className}`;
   const style = { "--stagger-delay": `${delay}ms` };
 
   if (href) {
@@ -31,17 +20,17 @@ function InfoCard({ icon, children, delay = 0, href, external, className = "" })
         href={href}
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
-        className={classes}
+        className={`${classes} underline-offset-3 hover:underline`}
         style={style}
       >
-        {content}
+        {body}
       </a>
     );
   }
 
   return (
     <div className={classes} style={style}>
-      {content}
+      {body}
     </div>
   );
 }
@@ -55,7 +44,7 @@ function ClockIcon() {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="size-[18px]"
+      className="size-4"
       aria-hidden="true"
     >
       <circle cx="12" cy="12" r="9" />
@@ -84,74 +73,57 @@ function DhakaTime() {
   }, []);
 
   return (
-    <InfoCard
-      icon={<ClockIcon />}
-      delay={300}
-      className="sm:col-span-2"
-    >
+    <InfoRow icon={<ClockIcon />} delay={360} className="sm:col-span-2">
       <span className="tabular-nums">{time || "--:--:--"}</span>
-      <span className="ml-2 text-xs text-muted-foreground">
-        {profile.timezoneLabel} · Live
-      </span>
-    </InfoCard>
+      <span className="ml-2 text-xs">{profile.timezoneLabel}</span>
+    </InfoRow>
   );
 }
 
 export default function PersonalInfo() {
   return (
     <Panel>
-      <h2 className="sr-only">Overview</h2>
       <SectionHeading
-        icon={<CodeXml className="size-[18px]" />}
+        icon={<CodeXml className="size-4" />}
         title="Overview"
-        subtitle="The essentials, at a glance"
       />
-      <PanelContent>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <InfoCard
-            icon={<CodeXml className="size-[18px]" />}
-            delay={0}
-          >
+      <PanelContent className="px-4 py-3">
+        <div className="grid grid-cols-1 gap-x-6 gap-y-1 sm:grid-cols-2">
+          <InfoRow icon={<CodeXml className="size-4" />} delay={0}>
             {profile.title}
-          </InfoCard>
-          <InfoCard
-            icon={<MapPin className="size-[18px]" />}
-            delay={60}
-          >
+          </InfoRow>
+          <InfoRow icon={<MapPin className="size-4" />} delay={60}>
             {profile.location}
-          </InfoCard>
+          </InfoRow>
 
-          <InfoCard
-            icon={<Mars className="size-[18px]" />}
-            delay={120}
-          >
+          <InfoRow icon={<Mars className="size-4" />} delay={120}>
             <span aria-label={`Pronouns: ${profile.pronouns}`}>
               {profile.pronouns}
             </span>
-          </InfoCard>
-          <InfoCard
-            icon={<Mail className="size-[18px]" />}
+          </InfoRow>
+          <InfoRow
+            icon={<Mail className="size-4" />}
             delay={180}
             href={`mailto:${profile.email}`}
           >
-            <span className="block truncate">{profile.email}</span>
-          </InfoCard>
+            {profile.email}
+          </InfoRow>
 
-          <InfoCard
-            icon={<Globe className="size-[18px]" />}
+          <InfoRow
+            icon={<Phone className="size-4" />}
             delay={240}
-            href={profile.websiteUrl}
-            external
-          >
-            <span className="block truncate">{profile.website}</span>
-          </InfoCard>
-          <InfoCard
-            icon={<Phone className="size-[18px]" />}
-            delay={300}
             href={profile.phoneHref}
           >
             <span className="tabular-nums">{profile.phone}</span>
-          </InfoCard>
+          </InfoRow>
+          <InfoRow
+            icon={<Globe className="size-4" />}
+            delay={300}
+            href={profile.websiteUrl}
+            external
+          >
+            {profile.website}
+          </InfoRow>
 
           <DhakaTime />
         </div>

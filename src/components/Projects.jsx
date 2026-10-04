@@ -16,7 +16,10 @@ function ProjectRow({ project }) {
           aria-expanded={open}
           className="flex min-w-0 flex-1 items-center gap-3 text-left"
         >
-          <span className="icon-tile size-9 shrink-0 rounded-xl font-mono text-[11px] font-semibold transition-transform duration-500 ease-out group-hover/row:-translate-y-0.5 group-hover/row:scale-105">
+          <span
+            className="flex size-8 shrink-0 items-center justify-center rounded-lg font-mono text-[10px] font-semibold text-white ring-1 ring-black/10 transition-transform duration-300 ease-out group-hover/row:-translate-y-0.5 group-hover/row:scale-105"
+            style={{ backgroundColor: project.iconBg }}
+          >
             {project.icon}
           </span>
 

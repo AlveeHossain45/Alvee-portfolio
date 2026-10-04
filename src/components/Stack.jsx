@@ -1,4 +1,5 @@
-import { Panel, PanelContent, PanelHeader, PanelTitle } from "./Panel";
+import { Blocks } from "lucide-react";
+import { Panel, PanelContent, SectionHeading } from "./Panel";
 import { stack } from "../data/portfolioData";
 
 function TechIcon({ item }) {
@@ -121,9 +122,12 @@ function TechIcon({ item }) {
 export default function Stack() {
   return (
     <Panel id="stack">
-      <PanelHeader>
-        <PanelTitle>Stack</PanelTitle>
-      </PanelHeader>
+      <SectionHeading
+        icon={<Blocks className="size-[18px]" />}
+        title="Stack"
+        count={`(${stack.length})`}
+        subtitle="Tools and languages I build with"
+      />
       <PanelContent
         className="dot-grid"
         style={{
@@ -131,20 +135,27 @@ export default function Stack() {
             "color-mix(in oklab, var(--foreground) 5%, transparent)",
         }}
       >
-        <ul className="grid grid-cols-4 gap-x-3 gap-y-5 select-none sm:grid-cols-6 md:grid-cols-7">
-          {stack.map((item) => (
-            <li key={item.name} className="flex flex-col items-center gap-1.5">
-              <span
+        <ul className="grid grid-cols-3 gap-2.5 select-none sm:grid-cols-4 md:grid-cols-6">
+          {stack.map((item, i) => (
+            <li
+              key={item.name}
+              className="stagger-item"
+              style={{ "--stagger-delay": `${Math.min(i, 12) * 45}ms` }}
+            >
+              <div
                 title={item.name}
                 aria-label={item.name}
-                className="transition-transform duration-200 hover:scale-110"
+                className="tech-glow group flex h-full w-full cursor-default flex-col items-center gap-2 rounded-2xl border border-edge bg-card/50 px-2 py-3.5"
+                style={{ "--tech": item.color }}
               >
-                <TechIcon item={item} />
-                <span className="sr-only">{item.name}</span>
-              </span>
-              <span className="max-w-full truncate font-mono text-[10px] text-muted-foreground">
-                {item.name}
-              </span>
+                <span className="transition-transform duration-500 ease-out group-hover:-translate-y-0.5 group-hover:scale-115">
+                  <TechIcon item={item} />
+                  <span className="sr-only">{item.name}</span>
+                </span>
+                <span className="w-full truncate text-center font-mono text-[10px] text-muted-foreground transition-colors duration-300 group-hover:text-foreground">
+                  {item.name}
+                </span>
+              </div>
             </li>
           ))}
         </ul>

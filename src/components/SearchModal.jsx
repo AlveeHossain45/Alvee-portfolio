@@ -1,6 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Search, ArrowRight, ArrowUpRight } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Box,
+  Layers,
+  Link2,
+  Search,
+} from "lucide-react";
 import { searchItems } from "../data/portfolioData";
+
+const GROUP_ICONS = {
+  Sections: <Layers className="size-3.5" />,
+  Projects: <Box className="size-3.5" />,
+  Links: <Link2 className="size-3.5" />,
+};
 
 export default function SearchModal({ open, onClose }) {
   const [query, setQuery] = useState("");
@@ -76,17 +89,23 @@ export default function SearchModal({ open, onClose }) {
       <button
         type="button"
         aria-label="Close search"
-        className="enter-fade absolute inset-0 bg-black/40 backdrop-blur-[2px]"
+        className="enter-fade absolute inset-0 bg-black/45 backdrop-blur-[3px]"
         onClick={onClose}
       />
       <div
         role="dialog"
         aria-modal="true"
         aria-label="Search"
-        className="enter-pop relative z-10 w-full max-w-lg overflow-hidden rounded-xl border border-edge bg-popover text-popover-foreground shadow-[0_8px_40px_rgba(0,0,0,0.18)]"
+        className="enter-pop relative z-10 w-full max-w-lg overflow-hidden rounded-2xl border border-edge bg-popover text-popover-foreground shadow-[0_24px_70px_-24px_rgba(0,0,0,0.55)]"
       >
-        <div className="flex items-center gap-3 border-b border-edge px-3">
-          <Search className="size-4 text-muted-foreground" />
+        <div
+          aria-hidden="true"
+          className="hairline-grad absolute inset-x-0 top-0 h-px"
+        />
+        <div className="flex items-center gap-3 border-b border-edge px-3.5">
+          <span className="icon-tile size-7 rounded-lg">
+            <Search className="size-3.5" />
+          </span>
           <input
             ref={inputRef}
             value={query}
@@ -94,19 +113,19 @@ export default function SearchModal({ open, onClose }) {
             placeholder="Search sections, projects..."
             className="h-12 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
           />
-          <kbd className="hidden rounded border border-edge bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground sm:inline">
-            ESC
-          </kbd>
+          <kbd className="kbd hidden sm:inline">ESC</kbd>
         </div>
+
         <div className="max-h-[50vh] overflow-y-auto p-2">
           {results.length === 0 && (
             <p className="px-3 py-8 text-center text-sm text-muted-foreground">
-              No results.
+              No results for “{query}”.
             </p>
           )}
           {Object.entries(groups).map(([group, items]) => (
-            <div key={group} className="mb-1">
-              <p className="px-2 py-1.5 font-mono text-[10px] tracking-wider text-muted-foreground uppercase">
+            <div key={group} className="mb-1.5">
+              <p className="flex items-center gap-1.5 px-2 py-1.5 font-mono text-[10px] tracking-wider text-muted-foreground uppercase">
+                {GROUP_ICONS[group]}
                 {group}
               </p>
               {items.map((item) => {
@@ -119,15 +138,29 @@ export default function SearchModal({ open, onClose }) {
                     type="button"
                     onMouseEnter={() => setActive(index)}
                     onClick={() => go(item.href)}
-                    className={`flex w-full items-center justify-between rounded-md px-2 py-2 text-left text-sm ${
-                      isActive ? "bg-accent" : "hover:bg-accent/60"
+                    className={`flex w-full items-center justify-between gap-2 rounded-xl px-2.5 py-2.5 text-left text-sm transition-all duration-200 ${
+                      isActive
+                        ? "bg-accent text-foreground shadow-[inset_0_0_0_1px_var(--edge)]"
+                        : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
                     }`}
                   >
-                    <span>{item.title}</span>
+                    <span className="truncate">{item.title}</span>
                     {item.href.startsWith("http") ? (
-                      <ArrowUpRight className="size-3.5 text-muted-foreground" />
+                      <ArrowUpRight
+                        className={`size-3.5 shrink-0 transition-all duration-300 ${
+                          isActive
+                            ? "text-brand opacity-100"
+                            : "opacity-40"
+                        }`}
+                      />
                     ) : (
-                      <ArrowRight className="size-3.5 text-muted-foreground" />
+                      <ArrowRight
+                        className={`size-3.5 shrink-0 transition-all duration-300 ${
+                          isActive
+                            ? "text-brand opacity-100"
+                            : "opacity-40"
+                        }`}
+                      />
                     )}
                   </button>
                 );
@@ -135,9 +168,17 @@ export default function SearchModal({ open, onClose }) {
             </div>
           ))}
         </div>
-        <div className="flex items-center justify-between border-t border-edge px-3 py-2 font-mono text-[10px] text-muted-foreground">
-          <span>↑↓ Navigate</span>
-          <span>↵ Open</span>
+
+        <div className="flex items-center justify-between border-t border-edge px-3.5 py-2.5 font-mono text-[10px] text-muted-foreground">
+          <span className="flex items-center gap-1.5">
+            <kbd className="kbd">↑</kbd>
+            <kbd className="kbd">↓</kbd>
+            Navigate
+          </span>
+          <span className="flex items-center gap-1.5">
+            <kbd className="kbd">↵</kbd>
+            Open
+          </span>
         </div>
       </div>
     </div>

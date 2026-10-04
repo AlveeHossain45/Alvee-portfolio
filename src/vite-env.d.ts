@@ -5,8 +5,7 @@ declare module "*.jsx" {
   const component: ComponentType<any>;
   export default component;
   export const Panel: ComponentType<any>;
-  export const PanelHeader: ComponentType<any>;
-  export const PanelTitle: ComponentType<any>;
+  export const SectionHeading: ComponentType<any>;
   export const PanelContent: ComponentType<any>;
   export const StripeDivider: ComponentType<any>;
   export const AHMark: ComponentType<any>;

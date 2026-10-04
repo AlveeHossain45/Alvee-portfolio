@@ -12,31 +12,51 @@ export function Panel({ id, className = "", children, ...props }) {
   );
 }
 
-export function PanelHeader({ className = "", children }) {
+export function SectionHeading({
+  icon,
+  title,
+  count,
+  subtitle,
+  action,
+  tone = "brand",
+  className = "",
+}) {
+  const tile =
+    tone === "mono"
+      ? "grid size-9 shrink-0 place-items-center rounded-xl bg-foreground text-background shadow-[0_10px_22px_-16px_rgba(0,0,0,0.9)] transition-transform duration-300 ease-out group-hover:scale-105"
+      : "icon-tile size-9 shrink-0 rounded-xl";
+
   return (
     <header
       data-slot="panel-header"
-      className={`screen-line-after px-4 ${className}`}
+      className={`screen-line-after group ${className}`}
     >
-      {children}
+      <div className="flex items-center gap-3 px-4 py-4">
+        <span className={tile}>{icon}</span>
+        <div className="min-w-0 flex-1">
+          <h2 className="flex items-baseline gap-1.5 text-lg font-semibold tracking-tight sm:text-xl">
+            <span className="truncate">{title}</span>
+            {count != null && (
+              <sup className="font-mono text-[11px] font-medium text-muted-foreground">
+                {count}
+              </sup>
+            )}
+          </h2>
+          {subtitle && (
+            <p className="mt-0.5 truncate text-xs text-muted-foreground">
+              {subtitle}
+            </p>
+          )}
+        </div>
+        {action}
+      </div>
     </header>
   );
 }
 
-export function PanelTitle({ className = "", children }) {
+export function PanelContent({ className = "", children, ...props }) {
   return (
-    <h2
-      data-slot="panel-title"
-      className={`text-2xl font-semibold tracking-tight sm:text-3xl ${className}`}
-    >
-      {children}
-    </h2>
-  );
-}
-
-export function PanelContent({ className = "", children }) {
-  return (
-    <div data-slot="panel-body" className={`p-4 ${className}`}>
+    <div data-slot="panel-body" className={`p-4 ${className}`} {...props}>
       {children}
     </div>
   );
@@ -44,12 +64,16 @@ export function PanelContent({ className = "", children }) {
 
 export function StripeDivider() {
   return (
-    <div className="relative z-0 h-8">
+    <div className="relative z-0 h-7">
       <div
         className="diagonal-stripes pointer-events-none absolute inset-y-0 -left-[100vw] -z-10 w-[200vw]"
         style={{
           "--pattern-foreground":
             "color-mix(in oklab, var(--edge) 100%, transparent)",
+          maskImage:
+            "linear-gradient(90deg, transparent 0%, black 18%, black 82%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(90deg, transparent 0%, black 18%, black 82%, transparent 100%)",
         }}
       />
     </div>

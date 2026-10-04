@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  ArrowUpRight,
   CodeXml,
   Globe,
   Mail,
@@ -7,20 +8,59 @@ import {
   Mars,
   Phone,
 } from "lucide-react";
-import { Panel, PanelContent } from "./Panel";
+import { Panel, PanelContent, SectionHeading } from "./Panel";
 import { profile } from "../data/portfolioData";
 
-function IntroItem({ children }) {
+function InfoCard({ icon, children, delay = 0, href, external, className = "" }) {
+  const content = (
+    <>
+      <span className="icon-tile size-9 shrink-0 rounded-[10px]">{icon}</span>
+      <span className="min-w-0 flex-1 text-sm">{children}</span>
+      {href && (
+        <ArrowUpRight className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand group-hover:opacity-100" />
+      )}
+    </>
+  );
+
+  const classes = `stagger-item group flex items-center gap-3 rounded-xl border border-edge bg-card/40 p-3 hover:border-brand/40 hover:bg-card ${className}`;
+  const style = { "--stagger-delay": `${delay}ms` };
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        target={external ? "_blank" : undefined}
+        rel={external ? "noopener noreferrer" : undefined}
+        className={classes}
+        style={style}
+      >
+        {content}
+      </a>
+    );
+  }
+
   return (
-    <div className="flex items-center gap-4 font-mono text-sm">{children}</div>
+    <div className={classes} style={style}>
+      {content}
+    </div>
   );
 }
 
-function IntroIcon({ children }) {
+function ClockIcon() {
   return (
-    <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground [&_svg]:size-4">
-      {children}
-    </div>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="size-[18px]"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
+    </svg>
   );
 }
 
@@ -44,18 +84,16 @@ function DhakaTime() {
   }, []);
 
   return (
-    <IntroItem>
-      <IntroIcon>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="12" cy="12" r="9" />
-          <path d="M12 7v5l3 2" />
-        </svg>
-      </IntroIcon>
-      <p className="text-sm">
-        <span className="tabular-nums">{time || "--:--:--"}</span>
-        <span className="ml-2 text-muted-foreground">{profile.timezoneLabel}</span>
-      </p>
-    </IntroItem>
+    <InfoCard
+      icon={<ClockIcon />}
+      delay={300}
+      className="sm:col-span-2"
+    >
+      <span className="tabular-nums">{time || "--:--:--"}</span>
+      <span className="ml-2 text-xs text-muted-foreground">
+        {profile.timezoneLabel} · Live
+      </span>
+    </InfoCard>
   );
 }
 
@@ -63,69 +101,58 @@ export default function PersonalInfo() {
   return (
     <Panel>
       <h2 className="sr-only">Overview</h2>
+      <SectionHeading
+        icon={<CodeXml className="size-[18px]" />}
+        title="Overview"
+        subtitle="The essentials, at a glance"
+      />
       <PanelContent>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-x-6">
-          <div className="space-y-4">
-            <IntroItem>
-              <IntroIcon>
-                <CodeXml />
-              </IntroIcon>
-              <p>{profile.title}</p>
-            </IntroItem>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <InfoCard
+            icon={<CodeXml className="size-[18px]" />}
+            delay={0}
+          >
+            {profile.title}
+          </InfoCard>
+          <InfoCard
+            icon={<MapPin className="size-[18px]" />}
+            delay={60}
+          >
+            {profile.location}
+          </InfoCard>
 
-            <IntroItem>
-              <IntroIcon>
-                <Mars />
-              </IntroIcon>
-              <p aria-label={`Pronouns: ${profile.pronouns}`}>
-                {profile.pronouns}
-              </p>
-            </IntroItem>
+          <InfoCard
+            icon={<Mars className="size-[18px]" />}
+            delay={120}
+          >
+            <span aria-label={`Pronouns: ${profile.pronouns}`}>
+              {profile.pronouns}
+            </span>
+          </InfoCard>
+          <InfoCard
+            icon={<Mail className="size-[18px]" />}
+            delay={180}
+            href={`mailto:${profile.email}`}
+          >
+            <span className="block truncate">{profile.email}</span>
+          </InfoCard>
 
-            <DhakaTime />
+          <InfoCard
+            icon={<Globe className="size-[18px]" />}
+            delay={240}
+            href={profile.websiteUrl}
+            external
+          >
+            <span className="block truncate">{profile.website}</span>
+          </InfoCard>
+          <InfoCard
+            icon={<Phone className="size-[18px]" />}
+            delay={300}
+          >
+            {profile.countryCode}
+          </InfoCard>
 
-            <IntroItem>
-              <IntroIcon>
-                <Phone />
-              </IntroIcon>
-              <p>{profile.countryCode}</p>
-            </IntroItem>
-
-            <IntroItem>
-              <IntroIcon>
-                <Globe />
-              </IntroIcon>
-              <a
-                href={profile.websiteUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline-offset-3 hover:underline"
-              >
-                {profile.website}
-              </a>
-            </IntroItem>
-          </div>
-
-          <div className="space-y-4">
-            <IntroItem>
-              <IntroIcon>
-                <MapPin />
-              </IntroIcon>
-              <p>{profile.location}</p>
-            </IntroItem>
-
-            <IntroItem>
-              <IntroIcon>
-                <Mail />
-              </IntroIcon>
-              <a
-                href={`mailto:${profile.email}`}
-                className="break-all underline-offset-3 hover:underline"
-              >
-                {profile.email}
-              </a>
-            </IntroItem>
-          </div>
+          <DhakaTime />
         </div>
       </PanelContent>
     </Panel>

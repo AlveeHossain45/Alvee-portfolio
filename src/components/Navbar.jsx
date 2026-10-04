@@ -5,6 +5,19 @@ import GitHubIcon from "./GitHubIcon";
 import LeetCodeIcon from "./LeetCodeIcon";
 import { profile, navItems } from "../data/portfolioData";
 
+function IconButton({ label, children, className = "", ...props }) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      className={`inline-flex size-8 items-center justify-center rounded-full text-foreground transition-all duration-300 hover:bg-accent hover:scale-105 active:scale-95 ${className}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}
+
 export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -45,36 +58,31 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
     <header className="sticky top-0 z-50">
       <div className="mx-auto w-full max-w-[840px]">
         <div
-          className={`screen-line-before screen-line-after border-x border-edge ${
+          className={`screen-line-before screen-line-after border-x border-edge transition-all duration-300 ${
             scrolled
-              ? "bg-background/80 backdrop-blur-md"
+              ? "bg-background/75 shadow-[0_10px_30px_-24px_rgba(0,0,0,0.6)] backdrop-blur-xl"
               : "bg-background/90 backdrop-blur-sm"
           }`}
         >
-            <div className="flex h-12 items-center justify-between gap-2 px-3 sm:px-4">
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-foreground/40 via-foreground/80 to-foreground/40 transition-[width] duration-150 ease-out"
-                style={{ width: `${progress * 100}%` }}
-              />
-              <a
+          <div className="flex h-12 items-center justify-between gap-2 px-3 sm:px-4">
+            <a
               href="#top"
               aria-label="Alvee Hossain"
-              className="flex size-8 items-center justify-center text-foreground"
+              className="press group flex size-8 items-center justify-center rounded-lg transition-colors duration-300 hover:bg-accent"
             >
-              <AHNavMark className="h-5 w-5" />
+              <AHNavMark className="h-5 w-5 transition-transform duration-500 ease-out group-hover:scale-110" />
             </a>
 
-            <nav className="hidden items-center gap-1 sm:flex">
+            <nav className="hidden items-center gap-0.5 sm:flex">
               {navItems.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
                   aria-current={active === item.href ? "true" : undefined}
-                  className={`rounded-full px-2.5 py-1 text-[13px] font-medium transition-colors duration-200 ${
+                  className={`relative rounded-full px-3 py-1.5 text-[13px] font-medium transition-all duration-300 ${
                     active === item.href
-                      ? "bg-accent text-foreground"
-                      : "text-foreground/70 hover:bg-accent/70 hover:text-foreground"
+                      ? "bg-accent text-foreground shadow-[inset_0_0_0_1px_var(--edge)]"
+                      : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
                   }`}
                 >
                   {item.label}
@@ -86,10 +94,10 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
               <button
                 type="button"
                 onClick={onOpenSearch}
-                className="inline-flex h-8 items-center gap-1.5 rounded-full border border-edge bg-background px-2.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                className="press group inline-flex h-8 items-center gap-1.5 rounded-full border border-edge bg-background px-2.5 text-muted-foreground transition-all duration-300 hover:border-brand/40 hover:text-foreground"
                 aria-label="Search"
               >
-                <Search className="size-3.5" />
+                <Search className="size-3.5 transition-transform duration-300 group-hover:scale-110" />
                 <span className="hidden font-mono text-[11px] sm:inline">
                   Ctrl K
                 </span>
@@ -100,7 +108,7 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LeetCode"
-                className="inline-flex size-8 items-center justify-center rounded-full text-[#FFA116] transition-all duration-200 hover:bg-[#FFA116]/10 hover:scale-110"
+                className="inline-flex size-8 items-center justify-center rounded-full text-[#FFA116] transition-all duration-300 hover:scale-110 hover:bg-[#FFA116]/12"
               >
                 <LeetCodeIcon className="size-4" />
               </a>
@@ -110,32 +118,42 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                className="inline-flex size-8 items-center justify-center rounded-full text-foreground transition-all duration-200 hover:bg-accent hover:scale-110"
+                className="inline-flex size-8 items-center justify-center rounded-full text-foreground transition-all duration-300 hover:scale-110 hover:bg-accent"
               >
                 <GitHubIcon className="size-4" />
               </a>
 
-              <button
-                type="button"
+              <IconButton
+                label="Toggle theme"
                 onClick={onToggleTheme}
-                aria-label="Toggle theme"
-                className="inline-flex size-8 items-center justify-center rounded-full text-foreground transition-all duration-200 hover:bg-accent hover:scale-110"
+                className="overflow-hidden"
               >
-                {theme === "dark" ? (
-                  <Sun className="size-4" />
-                ) : (
-                  <Moon className="size-4" />
-                )}
-              </button>
+                <span key={theme} className="icon-swap">
+                  {theme === "dark" ? (
+                    <Sun className="size-4" />
+                  ) : (
+                    <Moon className="size-4" />
+                  )}
+                </span>
+              </IconButton>
 
-              <button
-                type="button"
-                className="inline-flex size-8 items-center justify-center rounded-full sm:hidden"
-                aria-label={open ? "Close menu" : "Open menu"}
+              <IconButton
+                label={open ? "Close menu" : "Open menu"}
+                className="sm:hidden"
                 onClick={() => setOpen((v) => !v)}
               >
                 {open ? <X className="size-4" /> : <Menu className="size-4" />}
-              </button>
+              </IconButton>
+            </div>
+
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5"
+            >
+              <span
+                className="block h-full origin-left grad-brand shadow-[0_0_10px_0_rgba(99,102,241,0.55)] transition-transform duration-150 ease-out"
+                style={{ transform: `scaleX(${progress})` }}
+              />
             </div>
           </div>
         </div>
@@ -144,14 +162,14 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
       {open && (
         <div className="sm:hidden">
           <div className="mx-auto w-full max-w-[840px]">
-            <div className="border-x border-b border-edge bg-background">
-              <nav className="flex flex-col p-2">
+            <div className="enter-rise border-x border-b border-edge bg-background/95 backdrop-blur-xl">
+              <nav className="flex flex-col gap-0.5 p-2">
                 {navItems.map((item) => (
                   <a
                     key={item.href}
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent"
+                    className="rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-200 hover:bg-accent"
                   >
                     {item.label}
                   </a>
@@ -159,14 +177,14 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
                 <a
                   href="#github"
                   onClick={() => setOpen(false)}
-                  className="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent"
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-200 hover:bg-accent"
                 >
                   GitHub Activity
                 </a>
                 <a
                   href="#experience"
                   onClick={() => setOpen(false)}
-                  className="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent"
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-200 hover:bg-accent"
                 >
                   Experience
                 </a>
@@ -174,7 +192,7 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
                   href={profile.leetcodeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent"
+                  className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-200 hover:bg-accent"
                 >
                   <LeetCodeIcon className="size-4 text-[#FFA116]" />
                   LeetCode Profile

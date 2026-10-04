@@ -1,18 +1,17 @@
-import { Panel, PanelHeader, PanelTitle } from "./Panel";
+﻿import { ShieldCheck } from "lucide-react";
+import { Panel, SectionHeading } from "./Panel";
 import { certifications } from "../data/portfolioData";
 
 export default function Certifications() {
   return (
     <Panel id="certs">
-      <PanelHeader>
-        <PanelTitle>
-          Certifications
-          <sup className="ml-1 text-sm font-medium text-muted-foreground">
-            ({certifications.length})
-          </sup>
-        </PanelTitle>
-      </PanelHeader>
-      <p className="px-4 py-8 text-center text-sm text-muted-foreground">
+      <SectionHeading
+        icon={<ShieldCheck className="size-[18px]" />}
+        title="Certifications"
+        count={`(${certifications.length})`}
+        subtitle="Courses and credentials earned"
+      />
+      <p className="px-4 py-10 text-center text-sm text-muted-foreground">
         No certifications listed yet.
       </p>
     </Panel>

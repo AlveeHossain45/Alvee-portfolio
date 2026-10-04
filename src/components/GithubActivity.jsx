@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
-import { Panel, PanelContent, PanelHeader, PanelTitle } from "./Panel";
+import { ArrowUpRight, CalendarDays, Flame, Trophy } from "lucide-react";
+import { Panel, PanelContent, SectionHeading } from "./Panel";
+import GitHubIcon from "./GitHubIcon";
 import { profile } from "../data/portfolioData";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -259,10 +260,13 @@ export default function GithubActivity({ theme }) {
 
   return (
     <Panel id="github">
-      <PanelHeader>
-        <div className="flex items-baseline justify-between gap-3 py-1">
-          <PanelTitle>GitHub Contributions</PanelTitle>
-          <span className="flex shrink-0 items-center gap-1.5 font-mono text-[11px] text-muted-foreground">
+      <SectionHeading
+        tone="mono"
+        icon={<GitHubIcon className="size-5" />}
+        title="GitHub Contributions"
+        subtitle="A year of consistent building"
+        action={
+          <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-edge bg-muted/50 px-2.5 py-1 font-mono text-[11px] text-muted-foreground">
             <span
               className={`size-1.5 rounded-full ${
                 failed
@@ -274,10 +278,63 @@ export default function GithubActivity({ theme }) {
             />
             {failed ? "offline" : loading ? "syncing" : "live"}
           </span>
-        </div>
-      </PanelHeader>
+        }
+      />
 
       <PanelContent className="overflow-x-auto">
+        <div className="mb-4 grid grid-cols-3 gap-2">
+          <div
+            className="stagger-item flex items-center gap-2.5 rounded-xl border border-edge bg-card/40 px-3 py-2.5"
+            style={{ "--stagger-delay": "0ms" }}
+          >
+            <span className="icon-tile size-8 rounded-lg">
+              <Trophy className="size-4" />
+            </span>
+            <div className="min-w-0">
+              <p className="truncate text-base leading-tight font-semibold tabular-nums">
+                {loading ? "—" : stats.total.toLocaleString()}
+              </p>
+              <p className="truncate text-[11px] text-muted-foreground">
+                Contributions
+              </p>
+            </div>
+          </div>
+
+          <div
+            className="stagger-item flex items-center gap-2.5 rounded-xl border border-edge bg-card/40 px-3 py-2.5"
+            style={{ "--stagger-delay": "80ms" }}
+          >
+            <span className="icon-tile size-8 rounded-lg">
+              <Flame className="size-4" />
+            </span>
+            <div className="min-w-0">
+              <p className="truncate text-base leading-tight font-semibold tabular-nums">
+                {loading ? "—" : `${stats.longest}d`}
+              </p>
+              <p className="truncate text-[11px] text-muted-foreground">
+                Longest streak
+              </p>
+            </div>
+          </div>
+
+          <div
+            className="stagger-item flex items-center gap-2.5 rounded-xl border border-edge bg-card/40 px-3 py-2.5"
+            style={{ "--stagger-delay": "160ms" }}
+          >
+            <span className="icon-tile size-8 rounded-lg">
+              <CalendarDays className="size-4" />
+            </span>
+            <div className="min-w-0">
+              <p className="truncate text-base leading-tight font-semibold tabular-nums">
+                {loading ? "—" : `${stats.current}d`}
+              </p>
+              <p className="truncate text-[11px] text-muted-foreground">
+                Current streak
+              </p>
+            </div>
+          </div>
+        </div>
+
         {failed ? (
           <div className="flex min-h-[112px] flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-edge text-center">
             <p className="text-sm text-muted-foreground">
@@ -349,10 +406,10 @@ export default function GithubActivity({ theme }) {
                             });
                           }}
                           onMouseLeave={() => setHover(null)}
-                          className={`size-[10px] rounded-[2px] transition-colors ${
+                          className={`size-[10px] rounded-[3px] transition-all duration-200 ease-out ${
                             loading
                               ? "animate-pulse bg-muted"
-                              : "hover:ring-1 hover:ring-foreground/30"
+                               : "hover:scale-125 hover:ring-1 hover:ring-foreground/40"
                           } ${isToday ? "ring-1 ring-foreground/40" : ""}`}
                           style={
                             loading
@@ -373,7 +430,7 @@ export default function GithubActivity({ theme }) {
                 {[0, 1, 2, 3, 4].map((lvl) => (
                   <span
                     key={lvl}
-                    className="size-[10px] rounded-[2px]"
+                    className="size-[10px] rounded-[3px]"
                     style={{ backgroundColor: levelColor(lvl, dark) }}
                   />
                 ))}
@@ -384,24 +441,15 @@ export default function GithubActivity({ theme }) {
                 {loading ? (
                   <span className="animate-pulse">Loading contributions…</span>
                 ) : (
-                  <>
-                    <a
-                      href={profile.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-0.5 font-medium text-foreground underline-offset-2 hover:underline"
-                    >
-                      {stats.total.toLocaleString()}
-                      <span className="font-normal text-muted-foreground">
-                        contributions in the last year
-                      </span>
-                      <ArrowUpRight className="size-3" />
-                    </a>
-                    <span aria-hidden="true">·</span>
-                    <span>longest streak {stats.longest}d</span>
-                    <span aria-hidden="true">·</span>
-                    <span>current {stats.current}d</span>
-                  </>
+                  <a
+                    href={profile.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-1 font-medium text-foreground transition-colors hover:text-brand"
+                  >
+                    @{profile.github}
+                    <ArrowUpRight className="size-3 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </a>
                 )}
               </p>
             </div>

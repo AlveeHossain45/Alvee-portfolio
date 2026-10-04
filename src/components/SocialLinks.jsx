@@ -1,6 +1,7 @@
 import { ArrowUpRight, Globe, Mail } from "lucide-react";
 import { Panel } from "./Panel";
 import GitHubIcon from "./GitHubIcon";
+import LinkedInIcon from "./LinkedInIcon";
 import LeetCodeIcon from "./LeetCodeIcon";
 import { socialLinks } from "../data/portfolioData";
 
@@ -9,13 +10,17 @@ const TILES = {
     icon: <GitHubIcon className="size-5" />,
     style: { background: "#181717", color: "#ffffff" },
   },
+  linkedin: {
+    icon: <LinkedInIcon className="size-5" />,
+    style: { background: "#0A66C2", color: "#ffffff" },
+  },
   leetcode: {
     icon: <LeetCodeIcon className="size-5" />,
     style: { background: "#FFA116", color: "#ffffff" },
   },
   email: {
     icon: <Mail className="size-5" />,
-    style: { background: "linear-gradient(135deg, #fb7185, #f97316)" },
+    style: { background: "linear-gradient(135deg, #EA4335, #C5221F)" },
   },
   globe: {
     icon: <Globe className="size-5" />,
@@ -58,14 +63,14 @@ export default function SocialLinks() {
               >
                 <IconTile link={link} />
                 <span className="min-w-0 flex-1">
-                  <span className="flex items-center gap-1 text-sm font-medium group-hover:text-brand">
+                  <span className="flex items-center gap-1 text-sm font-medium">
                     {link.title}
                   </span>
                   <span className="mt-0.5 block truncate font-mono text-xs text-muted-foreground">
                     {link.subtitle}
                   </span>
                 </span>
-                <span className="flex size-7 shrink-0 items-center justify-center rounded-full border border-edge bg-background text-muted-foreground opacity-0 transition-all duration-400 group-hover:opacity-100">
+                <span className="flex size-7 shrink-0 items-center justify-center rounded-full border border-edge bg-background text-muted-foreground opacity-0 transition-all duration-400 group-hover:text-foreground group-hover:opacity-100">
                   <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </span>
               </a>

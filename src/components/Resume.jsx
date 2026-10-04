@@ -13,8 +13,8 @@ export default function Resume() {
       <PanelContent className="p-0">
         <div className="flex flex-col items-stretch justify-between gap-4 px-4 py-4 sm:flex-row sm:items-center">
           <div className="flex items-center gap-3">
-            <div className="relative flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-edge bg-muted/50">
-              <FileText className="size-5 text-brand" />
+            <div className="icon-tile size-11 shrink-0 rounded-xl">
+              <FileText className="size-5" />
             </div>
             <div>
               <h3 className="text-sm font-semibold">My Resume</h3>

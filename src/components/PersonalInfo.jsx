@@ -17,12 +17,12 @@ function InfoCard({ icon, children, delay = 0, href, external, className = "" })
       <span className="icon-tile size-9 shrink-0 rounded-[10px]">{icon}</span>
       <span className="min-w-0 flex-1 text-sm">{children}</span>
       {href && (
-        <ArrowUpRight className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand group-hover:opacity-100" />
+        <ArrowUpRight className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground group-hover:opacity-100" />
       )}
     </>
   );
 
-  const classes = `stagger-item group flex items-center gap-3 rounded-xl border border-edge bg-card/40 p-3 hover:border-brand/40 hover:bg-card ${className}`;
+  const classes = `stagger-item group flex items-center gap-3 rounded-xl border border-edge bg-card/40 p-3 hover:border-foreground/30 hover:bg-card ${className}`;
   const style = { "--stagger-delay": `${delay}ms` };
 
   if (href) {
@@ -148,8 +148,9 @@ export default function PersonalInfo() {
           <InfoCard
             icon={<Phone className="size-[18px]" />}
             delay={300}
+            href={profile.phoneHref}
           >
-            {profile.countryCode}
+            <span className="tabular-nums">{profile.phone}</span>
           </InfoCard>
 
           <DhakaTime />

@@ -94,7 +94,7 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
               <button
                 type="button"
                 onClick={onOpenSearch}
-                className="press group inline-flex h-8 items-center gap-1.5 rounded-full border border-edge bg-background px-2.5 text-muted-foreground transition-all duration-300 hover:border-brand/40 hover:text-foreground"
+                className="press group inline-flex h-8 items-center gap-1.5 rounded-full border border-edge bg-background px-2.5 text-muted-foreground transition-all duration-300 hover:border-foreground/45 hover:text-foreground"
                 aria-label="Search"
               >
                 <Search className="size-3.5 transition-transform duration-300 group-hover:scale-110" />

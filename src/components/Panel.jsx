@@ -18,21 +18,15 @@ export function SectionHeading({
   count,
   subtitle,
   action,
-  tone = "brand",
   className = "",
 }) {
-  const tile =
-    tone === "mono"
-      ? "grid size-9 shrink-0 place-items-center rounded-xl bg-foreground text-background shadow-[0_10px_22px_-16px_rgba(0,0,0,0.9)] transition-transform duration-300 ease-out group-hover:scale-105"
-      : "icon-tile size-9 shrink-0 rounded-xl";
-
   return (
     <header
       data-slot="panel-header"
       className={`screen-line-after group ${className}`}
     >
       <div className="flex items-center gap-3 px-4 py-4">
-        <span className={tile}>{icon}</span>
+        <span className="icon-tile size-9 shrink-0 rounded-xl">{icon}</span>
         <div className="min-w-0 flex-1">
           <h2 className="flex items-baseline gap-1.5 text-lg font-semibold tracking-tight sm:text-xl">
             <span className="truncate">{title}</span>

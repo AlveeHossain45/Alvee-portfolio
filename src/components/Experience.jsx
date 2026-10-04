@@ -16,7 +16,7 @@ export default function Experience() {
 
       <div className="screen-line-after flex items-center justify-between px-4 py-3">
         <h3 className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-          <span className="size-1.5 rounded-full bg-brand" />
+          <span className="size-1.5 rounded-full bg-foreground" />
           Education
         </h3>
         <span className="font-mono text-[11px] text-muted-foreground">
@@ -28,9 +28,10 @@ export default function Experience() {
         <div className="flex items-center gap-3">
           <div className="flex size-7 shrink-0 items-center justify-center">
             <span
-              className="flex size-2 rounded-full bg-brand"
+              className="flex size-2 rounded-full bg-foreground"
               style={{
-                boxShadow: "0 0 0 4px color-mix(in oklab, var(--brand) 18%, transparent)",
+                boxShadow:
+                  "0 0 0 4px color-mix(in oklab, var(--foreground) 14%, transparent)",
               }}
             />
           </div>
@@ -38,19 +39,19 @@ export default function Experience() {
             {education.school}
           </h3>
           <span className="relative flex items-center justify-center">
-            <span className="ring-pulse absolute inline-flex size-3 rounded-full bg-brand" />
-            <span className="relative inline-flex size-2 rounded-full bg-brand" />
+            <span className="ring-pulse absolute inline-flex size-3 rounded-full bg-foreground" />
+            <span className="relative inline-flex size-2 rounded-full bg-foreground" />
           </span>
         </div>
 
-        <div className="relative mt-4 before:absolute before:top-0 before:bottom-0 before:left-3 before:w-px before:bg-gradient-to-b before:from-brand/50 before:to-transparent">
+        <div className="relative mt-4 before:absolute before:top-0 before:bottom-0 before:left-3 before:w-px before:bg-gradient-to-b before:from-foreground/35 before:to-transparent">
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             className="-mx-1 flex w-full items-start gap-3 rounded-xl px-1 text-left transition-colors duration-300 hover:bg-accent/50"
           >
-            <div className="relative z-10 flex size-6 shrink-0 items-center justify-center rounded-full border border-edge bg-background text-brand shadow-sm">
+            <div className="relative z-10 flex size-6 shrink-0 items-center justify-center rounded-full border border-edge bg-background text-foreground shadow-sm">
               <GraduationCap className="size-3.5" />
             </div>
             <div className="min-w-0 flex-1 pb-1">
@@ -63,7 +64,7 @@ export default function Experience() {
                 </div>
                 <ChevronDown
                   className={`mt-0.5 size-4 shrink-0 text-muted-foreground transition-transform duration-400 ease-out ${
-                    open ? "rotate-180 text-brand" : ""
+                    open ? "rotate-180 text-foreground" : ""
                   }`}
                 />
               </div>

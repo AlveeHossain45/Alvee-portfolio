@@ -30,7 +30,7 @@ export default function BackToTop() {
       type="button"
       aria-label="Scroll to top"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="enter-pop group fixed right-4 bottom-4 z-40 inline-flex size-11 items-center justify-center rounded-full border border-edge bg-background/85 text-foreground shadow-[0_12px_30px_-16px_rgba(0,0,0,0.7)] backdrop-blur-md transition-all duration-300 hover:border-brand/50 hover:text-brand active:scale-95"
+      className="enter-pop group fixed right-4 bottom-4 z-40 inline-flex size-11 items-center justify-center rounded-full border border-edge bg-background/85 text-foreground shadow-[0_12px_30px_-16px_rgba(0,0,0,0.7)] backdrop-blur-md transition-all duration-300 hover:border-foreground/50 hover:text-foreground active:scale-95"
     >
       <svg
         className="pointer-events-none absolute inset-0 -rotate-90"
@@ -45,7 +45,7 @@ export default function BackToTop() {
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
-          className="text-brand"
+          className="text-foreground"
           strokeDasharray={`${progress * CIRCUMFERENCE} ${CIRCUMFERENCE}`}
           style={{
             transition: "stroke-dasharray 150ms linear",

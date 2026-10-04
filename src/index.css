@@ -230,21 +230,19 @@
   .icon-tile {
     display: grid;
     place-items: center;
-    color: #fff;
-    background-image: var(--grad-brand);
-    box-shadow:
-      0 10px 22px -14px color-mix(in oklab, #6366f1 90%, transparent),
-      inset 0 1px 0 0 rgb(255 255 255 / 0.28);
+    color: var(--foreground);
+    background-color: var(--muted);
     transition:
       transform var(--dur-base) var(--ease-out-expo),
-      box-shadow var(--dur-base) var(--ease-out-expo);
+      scale var(--dur-base) var(--ease-out-expo),
+      color var(--dur-base) ease,
+      background-color var(--dur-base) ease;
   }
 
   .group:hover .icon-tile {
-    transform: translateY(-2px) scale(1.04);
-    box-shadow:
-      0 16px 30px -16px color-mix(in oklab, #6366f1 95%, transparent),
-      inset 0 1px 0 0 rgb(255 255 255 / 0.32);
+    transform: translateY(-1px) scale(1.06);
+    color: var(--background);
+    background-color: var(--foreground);
   }
 
   .tech-glow {
@@ -362,6 +360,17 @@
   }
 }
 
+@keyframes enter-left {
+  from {
+    opacity: 0;
+    transform: translateX(-36px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @keyframes enter-fade {
   from {
     opacity: 0;
@@ -427,6 +436,10 @@
 
 @utility enter-rise {
   animation: enter-rise 340ms var(--ease-out-expo) both;
+}
+
+@utility enter-left {
+  animation: enter-left 820ms var(--ease-out-expo) 320ms both;
 }
 
 @utility icon-swap {

@@ -148,7 +148,7 @@ export default function Stack() {
                 className="tech-glow group flex h-full w-full cursor-default flex-col items-center gap-2 rounded-2xl border border-edge bg-card/50 px-2 py-3.5"
                 style={{ "--tech": item.color }}
               >
-                <span className="transition-transform duration-500 ease-out group-hover:-translate-y-0.5 group-hover:scale-115">
+                <span className="transition-transform duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-110">
                   <TechIcon item={item} />
                   <span className="sr-only">{item.name}</span>
                 </span>

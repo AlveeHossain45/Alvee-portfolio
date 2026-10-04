@@ -261,7 +261,6 @@ export default function GithubActivity({ theme }) {
   return (
     <Panel id="github">
       <SectionHeading
-        tone="mono"
         icon={<GitHubIcon className="size-5" />}
         title="GitHub Contributions"
         subtitle="A year of consistent building"
@@ -445,7 +444,7 @@ export default function GithubActivity({ theme }) {
                     href={profile.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-1 font-medium text-foreground transition-colors hover:text-brand"
+                    className="group inline-flex items-center gap-1 font-medium text-foreground transition-colors hover:text-foreground"
                   >
                     @{profile.github}
                     <ArrowUpRight className="size-3 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

@@ -149,7 +149,7 @@ export default function SearchModal({ open, onClose }) {
                       <ArrowUpRight
                         className={`size-3.5 shrink-0 transition-all duration-300 ${
                           isActive
-                            ? "text-brand opacity-100"
+                            ? "text-foreground opacity-100"
                             : "opacity-40"
                         }`}
                       />
@@ -157,7 +157,7 @@ export default function SearchModal({ open, onClose }) {
                       <ArrowRight
                         className={`size-3.5 shrink-0 transition-all duration-300 ${
                           isActive
-                            ? "text-brand opacity-100"
+                            ? "text-foreground opacity-100"
                             : "opacity-40"
                         }`}
                       />

@@ -6,6 +6,7 @@ import Resume from "./components/Resume.jsx";
 import SocialLinks from "./components/SocialLinks.jsx";
 import About from "./components/About.jsx";
 import GithubActivity from "./components/GithubActivity.jsx";
+import LeetCodeActivity from "./components/LeetCodeActivity.jsx";
 import Stack from "./components/Stack.jsx";
 import Blog from "./components/Blog.jsx";
 import Experience from "./components/Experience.jsx";
@@ -96,6 +97,8 @@ export default function App() {
         <About />
         <StripeDivider />
         <GithubActivity theme={theme} />
+        <StripeDivider />
+        <LeetCodeActivity theme={theme} />
         <StripeDivider />
         <Stack />
         <StripeDivider />

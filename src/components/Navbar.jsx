@@ -206,6 +206,14 @@ export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
                   Experience
                 </a>
                 <a
+                  href="#leetcode"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-200 hover:bg-accent"
+                >
+                  <LeetCodeIcon className="size-4 text-[#FFA116]" />
+                  LeetCode Activity
+                </a>
+                <a
                   href={profile.leetcodeUrl}
                   target="_blank"
                   rel="noopener noreferrer"

@@ -16,8 +16,8 @@ export const profile = {
   githubUrl: "https://github.com/AlveeHossain45",
   linkedin: "alveehossain",
   linkedinUrl: "https://www.linkedin.com/in/alveehossain",
-  leetcode: "AlveeHossain45",
-  leetcodeUrl: "https://leetcode.com/u/AlveeHossain45/",
+  leetcode: "alveehossain45",
+  leetcodeUrl: "https://leetcode.com/u/alveehossain45/",
   image: "Alveejob.png",
   resumeUrl: "Alvee%20Hossain%20Resume.pdf",
 };
@@ -46,8 +46,8 @@ export const socialLinks = [
   {
     id: "leetcode",
     title: "LeetCode",
-    subtitle: "@AlveeHossain45",
-    href: "https://leetcode.com/u/AlveeHossain45/",
+    subtitle: "@alveehossain45",
+    href: "https://leetcode.com/u/alveehossain45/",
     kind: "leetcode",
     accent: "#FFA116",
   },
@@ -138,6 +138,7 @@ export const navItems = [
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
   { label: "Stack", href: "#stack" },
+  { label: "LeetCode", href: "#leetcode" },
   { label: "Blog", href: "#blog" },
 ];
 
@@ -158,6 +159,7 @@ export const searchItems = [
   { title: "Blog", href: "#blog", group: "Sections" },
   { title: "Resume", href: "#resume", group: "Sections" },
   { title: "GitHub Activity", href: "#github", group: "Sections" },
+  { title: "LeetCode Activity", href: "#leetcode", group: "Sections" },
   { title: "GitHub Profile", href: profile.githubUrl, group: "Links" },
   { title: "LinkedIn Profile", href: profile.linkedinUrl, group: "Links" },
   { title: "LeetCode Profile", href: profile.leetcodeUrl, group: "Links" },
